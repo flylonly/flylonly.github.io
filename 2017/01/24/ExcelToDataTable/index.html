@@ -6,14 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://flylonly.github.io">
-  <title>Archives: 2017/1 | Hyeongo的博客</title>
+  <title>NPOI将上传的excel转为datatable | Hyeongo的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hyeongo的博客">
-<meta property="og:url" content="http://flylonly.github.io/archives/2017/01/index.html">
+  <meta name="description" content="从文件流中获取DataTable 支持xls\xlsx,支持公式计算1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768using System.Data;using NPOI.HSSF.UserM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NPOI将上传的excel转为datatable">
+<meta property="og:url" content="http://flylonly.github.io/2017/01/24/ExcelToDataTable/index.html">
 <meta property="og:site_name" content="Hyeongo的博客">
+<meta property="og:description" content="从文件流中获取DataTable 支持xls\xlsx,支持公式计算1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768using System.Data;using NPOI.HSSF.UserM">
+<meta property="og:updated_time" content="2017-01-24T06:32:14.739Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hyeongo的博客">
+<meta name="twitter:title" content="NPOI将上传的excel转为datatable">
+<meta name="twitter:description" content="从文件流中获取DataTable 支持xls\xlsx,支持公式计算1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768using System.Data;using NPOI.HSSF.UserM">
   
   
     <link rel="icon" href="/favicon.png">
@@ -147,36 +151,56 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-ExcelToDataTable" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/24/ExcelToDataTable/" class="archive-article-date">
-  	<time datetime="2017-01-24T06:29:54.628Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-24</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/24/ExcelToDataTable/">NPOI将上传的excel转为datatable</a>
+    <h1 class="article-title" itemprop="name">
+      NPOI将上传的excel转为datatable
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/01/24/ExcelToDataTable/" class="archive-article-date">
+  	<time datetime="2017-01-24T06:29:54.628Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="从文件流中获取DataTable-支持xls-xlsx-支持公式计算"><a href="#从文件流中获取DataTable-支持xls-xlsx-支持公式计算" class="headerlink" title="从文件流中获取DataTable 支持xls\xlsx,支持公式计算"></a>从文件流中获取DataTable 支持xls\xlsx,支持公式计算</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line">using System.Data;</div><div class="line">using NPOI.HSSF.UserModel;</div><div class="line">using NPOI.SS.UserModel;</div><div class="line">using NPOI.XSSF.UserModel;</div><div class="line"></div><div class="line">/// &lt;summary&gt;</div><div class="line">/// 从文件流中获取DataTable 支持xls\xlsx</div><div class="line">/// &lt;/summary&gt;</div><div class="line">/// &lt;param name=&quot;file&quot;&gt;&lt;/param&gt;</div><div class="line">/// &lt;returns&gt;&lt;/returns&gt;</div><div class="line">public static DataTable StreamToDataTable(HttpPostedFileBase importFile)</div><div class="line">&#123;</div><div class="line">    IWorkbook workbook = null;</div><div class="line">    if (importFile.FileName.IndexOf(&quot;.xlsx&quot;) &gt; 0) // 2007版本</div><div class="line">        workbook = new XSSFWorkbook(importFile.InputStream);</div><div class="line">    else if (importFile.FileName.IndexOf(&quot;.xls&quot;) &gt; 0) // 2003版本</div><div class="line">        workbook = new HSSFWorkbook(importFile.InputStream);</div><div class="line"></div><div class="line"></div><div class="line">    NPOI.SS.UserModel.ISheet sheet = workbook.GetSheetAt(0);</div><div class="line"></div><div class="line">    DataTable dt = new DataTable();</div><div class="line">    int startRow = 0;</div><div class="line">    IRow firstRow = sheet.GetRow(0);</div><div class="line">    int cellCount = firstRow.LastCellNum; //一行最后一个cell的编号 即总的列数</div><div class="line"></div><div class="line">    for (int i = firstRow.FirstCellNum; i &lt; cellCount; ++i)</div><div class="line">    &#123;</div><div class="line">        DataColumn column = new DataColumn(firstRow.GetCell(i).StringCellValue);</div><div class="line">        dt.Columns.Add(column);</div><div class="line">    &#125;</div><div class="line">    startRow = sheet.FirstRowNum + 1;</div><div class="line"></div><div class="line">    //最后一列的标号</div><div class="line">    int rowCount = sheet.LastRowNum;</div><div class="line">    for (int i = startRow; i &lt;= rowCount; ++i)</div><div class="line">    &#123;</div><div class="line">        IRow row = sheet.GetRow(i);</div><div class="line">        if (row == null) continue; //没有数据的行默认是null　　　　　　　</div><div class="line"></div><div class="line">        DataRow dataRow = dt.NewRow();</div><div class="line">        for (int j = row.FirstCellNum; j &lt; cellCount; ++j)</div><div class="line">        &#123;</div><div class="line">            //则仅读取其Cell单元格的显示值 而不是读取公式</div><div class="line">            if (row.GetCell(j).CellType == CellType.Formula)</div><div class="line">            &#123;</div><div class="line">                try</div><div class="line">                &#123;</div><div class="line">                  if (row.GetCell(j) != null)</div><div class="line">                    dataRow[j] = row.GetCell(j).NumericCellValue;</div><div class="line">                &#125;</div><div class="line">                catch</div><div class="line">                &#123;</div><div class="line">                    if (row.GetCell(j) != null)</div><div class="line">                        dataRow[j] = row.GetCell(j).StringCellValue;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            else</div><div class="line">            &#123;</div><div class="line">                if (row.GetCell(j) != null) //同理，没有数据的单元格都默认是null</div><div class="line">                    dataRow[j] = row.GetCell(j).ToString();                       </div><div class="line">            &#125;</div><div class="line">            </div><div class="line">        &#125;</div><div class="line">        dt.Rows.Add(dataRow);</div><div class="line">    &#125;</div><div class="line">    return dt;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -192,7 +216,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -205,93 +229,86 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://flylonly.github.io/2017/01/24/ExcelToDataTable/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/24/js-01/" class="archive-article-date">
-  	<time datetime="2017-01-24T02:11:42.987Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/24/js-01/">js字符串与字符数组转换</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/javascript/" class="article-tag-list-link color1">javascript</a>
-        		</li>
-      		
-		</ul>
-	</div>
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2017/01/24/js-01/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">js字符串与字符数组转换</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/20/hello-world/" class="archive-article-date">
-  	<time datetime="2017-01-20T06:32:52.652Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/20/hello-world/">Hello World</a>
-    </h1>
+    <div class="duoshuo"></div>
   
 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -314,8 +331,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

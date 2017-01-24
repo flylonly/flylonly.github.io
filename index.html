@@ -149,6 +149,83 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-ExcelToDataTable" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/24/ExcelToDataTable/">NPOI将上传的excel转为datatable</a>
+    </h1>
+  
+
+        
+        <a href="/2017/01/24/ExcelToDataTable/" class="archive-article-date">
+  	<time datetime="2017-01-24T06:29:54.628Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="从文件流中获取DataTable-支持xls-xlsx-支持公式计算"><a href="#从文件流中获取DataTable-支持xls-xlsx-支持公式计算" class="headerlink" title="从文件流中获取DataTable 支持xls\xlsx,支持公式计算"></a>从文件流中获取DataTable 支持xls\xlsx,支持公式计算</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line">using System.Data;</div><div class="line">using NPOI.HSSF.UserModel;</div><div class="line">using NPOI.SS.UserModel;</div><div class="line">using NPOI.XSSF.UserModel;</div><div class="line"></div><div class="line">/// &lt;summary&gt;</div><div class="line">/// 从文件流中获取DataTable 支持xls\xlsx</div><div class="line">/// &lt;/summary&gt;</div><div class="line">/// &lt;param name=&quot;file&quot;&gt;&lt;/param&gt;</div><div class="line">/// &lt;returns&gt;&lt;/returns&gt;</div><div class="line">public static DataTable StreamToDataTable(HttpPostedFileBase importFile)</div><div class="line">&#123;</div><div class="line">    IWorkbook workbook = null;</div><div class="line">    if (importFile.FileName.IndexOf(&quot;.xlsx&quot;) &gt; 0) // 2007版本</div><div class="line">        workbook = new XSSFWorkbook(importFile.InputStream);</div><div class="line">    else if (importFile.FileName.IndexOf(&quot;.xls&quot;) &gt; 0) // 2003版本</div><div class="line">        workbook = new HSSFWorkbook(importFile.InputStream);</div><div class="line"></div><div class="line"></div><div class="line">    NPOI.SS.UserModel.ISheet sheet = workbook.GetSheetAt(0);</div><div class="line"></div><div class="line">    DataTable dt = new DataTable();</div><div class="line">    int startRow = 0;</div><div class="line">    IRow firstRow = sheet.GetRow(0);</div><div class="line">    int cellCount = firstRow.LastCellNum; //一行最后一个cell的编号 即总的列数</div><div class="line"></div><div class="line">    for (int i = firstRow.FirstCellNum; i &lt; cellCount; ++i)</div><div class="line">    &#123;</div><div class="line">        DataColumn column = new DataColumn(firstRow.GetCell(i).StringCellValue);</div><div class="line">        dt.Columns.Add(column);</div><div class="line">    &#125;</div><div class="line">    startRow = sheet.FirstRowNum + 1;</div><div class="line"></div><div class="line">    //最后一列的标号</div><div class="line">    int rowCount = sheet.LastRowNum;</div><div class="line">    for (int i = startRow; i &lt;= rowCount; ++i)</div><div class="line">    &#123;</div><div class="line">        IRow row = sheet.GetRow(i);</div><div class="line">        if (row == null) continue; //没有数据的行默认是null　　　　　　　</div><div class="line"></div><div class="line">        DataRow dataRow = dt.NewRow();</div><div class="line">        for (int j = row.FirstCellNum; j &lt; cellCount; ++j)</div><div class="line">        &#123;</div><div class="line">            //则仅读取其Cell单元格的显示值 而不是读取公式</div><div class="line">            if (row.GetCell(j).CellType == CellType.Formula)</div><div class="line">            &#123;</div><div class="line">                try</div><div class="line">                &#123;</div><div class="line">                  if (row.GetCell(j) != null)</div><div class="line">                    dataRow[j] = row.GetCell(j).NumericCellValue;</div><div class="line">                &#125;</div><div class="line">                catch</div><div class="line">                &#123;</div><div class="line">                    if (row.GetCell(j) != null)</div><div class="line">                        dataRow[j] = row.GetCell(j).StringCellValue;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            else</div><div class="line">            &#123;</div><div class="line">                if (row.GetCell(j) != null) //同理，没有数据的单元格都默认是null</div><div class="line">                    dataRow[j] = row.GetCell(j).ToString();                       </div><div class="line">            &#125;</div><div class="line">            </div><div class="line">        &#125;</div><div class="line">        dt.Rows.Add(dataRow);</div><div class="line">    &#125;</div><div class="line">    return dt;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">NPOI</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">excel导入数据</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/.NET/" class="article-tag-list-link color5">.NET</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/01/24/ExcelToDataTable/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-js-01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -169,9 +246,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="方法一：for循环遍历，然后利用charAt取值"><a href="#方法一：for循环遍历，然后利用charAt取值" class="headerlink" title="方法一：for循环遍历，然后利用charAt取值"></a>方法一：for循环遍历，然后利用charAt取值</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> toArray(str)&#123;</div><div class="line">    <span class="keyword">if</span>(typeof str !=<span class="string">"string"</span>)&#123;</div><div class="line">        <span class="built_in">return</span> [];</div><div class="line">    &#125;</div><div class="line">  <span class="keyword">if</span>(str===<span class="string">""</span>) <span class="built_in">return</span> [];</div><div class="line">    var arr=[];</div><div class="line">    <span class="keyword">for</span>(var i=0;i&lt; str.length;i++)&#123;</div><div class="line">        arr.push(str.charAt(i))</div><div class="line">    &#125; </div><div class="line">    <span class="built_in">return</span> arr;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="方法二：利用正则表达式"><a href="#方法二：利用正则表达式" class="headerlink" title="方法二：利用正则表达式"></a>方法二：利用正则表达式</h3><p><pre><code>var arr=str.match(/./g);<br></code></pre><br>strObj.match（reg）方法对字符串对象进行检索,返回包含所有匹配结果的数组。而 正则表达式 /./g 匹配的是所有的字符， 所以str.match(/./g)返回的是由字符串str中所有的字符组成的数组</p>
-<h3 id="方法三：利用split-“”-函数"><a href="#方法三：利用split-“”-函数" class="headerlink" title="方法三：利用split(“”)函数"></a>方法三：利用split(“”)函数</h3><p><pre><code>var arr=str.split(“”);<br></code></pre></p>
+        <h3 id="方法一：for循环遍历，然后利用charAt取值"><a href="#方法一：for循环遍历，然后利用charAt取值" class="headerlink" title="方法一：for循环遍历，然后利用charAt取值"></a>方法一：for循环遍历，然后利用charAt取值</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">toArray</span>(<span class="params">str</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">typeof</span> str !=<span class="string">"string"</span>)&#123;</div><div class="line">        <span class="keyword">return</span> [];</div><div class="line">    &#125;</div><div class="line">  <span class="keyword">if</span>(str===<span class="string">""</span>) <span class="keyword">return</span> [];</div><div class="line">    <span class="keyword">var</span> arr=[];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt; str.length;i++)&#123;</div><div class="line">        arr.push(str.charAt(i))</div><div class="line">    &#125; </div><div class="line">    <span class="keyword">return</span> arr;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="方法二：利用正则表达式"><a href="#方法二：利用正则表达式" class="headerlink" title="方法二：利用正则表达式"></a>方法二：利用正则表达式</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr=str.match(<span class="regexp">/./g</span>);</div></pre></td></tr></table></figure>
+<p>strObj.match（reg）方法对字符串对象进行检索,返回包含所有匹配结果的数组。而 正则表达式 /./g 匹配的是所有的字符， 所以str.match(/./g)返回的是由字符串str中所有的字符组成的数组</p>
+<h3 id="方法三：利用split-“”-函数"><a href="#方法三：利用split-“”-函数" class="headerlink" title="方法三：利用split(“”)函数"></a>方法三：利用split(“”)函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr=str.split(<span class="string">""</span>);</div></pre></td></tr></table></figure>
 <blockquote>
 <p>方法二最快，方法三次之，方法一最慢</p>
 </blockquote>
@@ -373,6 +451,14 @@
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">NPOI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">excel导入数据</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">javascript</a>
