@@ -8,19 +8,16 @@
   <link rel="dns-prefetch" href="http://flylonly.github.io">
   <title>js字符串与字符数组转换 | Hyeongo的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="##方法一：for循环遍历，然后利用charAt取值
-function toArray(str){    if(typeof str !=”string”){        return [];    }  if(str===””) return [];    var arr=[];    for(var i=0;i">
+  <meta name="description" content="方法一：for循环遍历，然后利用charAt取值1234567891011function toArray(str)&amp;#123;    if(typeof str !=&quot;string&quot;)&amp;#123;        return [];    &amp;#125;  if(str===&quot;&quot;) return [];    var arr=[];    for(var i=0;i&amp;lt; str.length;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="js字符串与字符数组转换">
 <meta property="og:url" content="http://flylonly.github.io/2017/01/24/js-01/index.html">
 <meta property="og:site_name" content="Hyeongo的博客">
-<meta property="og:description" content="##方法一：for循环遍历，然后利用charAt取值
-function toArray(str){    if(typeof str !=”string”){        return [];    }  if(str===””) return [];    var arr=[];    for(var i=0;i">
-<meta property="og:updated_time" content="2017-01-24T02:11:22.827Z">
+<meta property="og:description" content="方法一：for循环遍历，然后利用charAt取值1234567891011function toArray(str)&amp;#123;    if(typeof str !=&quot;string&quot;)&amp;#123;        return [];    &amp;#125;  if(str===&quot;&quot;) return [];    var arr=[];    for(var i=0;i&amp;lt; str.length;">
+<meta property="og:updated_time" content="2017-01-24T02:42:21.396Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js字符串与字符数组转换">
-<meta name="twitter:description" content="##方法一：for循环遍历，然后利用charAt取值
-function toArray(str){    if(typeof str !=”string”){        return [];    }  if(str===””) return [];    var arr=[];    for(var i=0;i">
+<meta name="twitter:description" content="方法一：for循环遍历，然后利用charAt取值1234567891011function toArray(str)&amp;#123;    if(typeof str !=&quot;string&quot;)&amp;#123;        return [];    &amp;#125;  if(str===&quot;&quot;) return [];    var arr=[];    for(var i=0;i&amp;lt; str.length;">
   
   
     <link rel="icon" href="/favicon.png">
@@ -174,14 +171,9 @@ function toArray(str){    if(typeof str !=”string”){        return [];    } 
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>##方法一：for循环遍历，然后利用charAt取值</p>
-<p><pre><code>function toArray(str){<br>    if(typeof str !=”string”){<br>        return [];<br>    }<br>  if(str===””) return [];<br>    var arr=[];<br>    for(var i=0;i<str.length;i++){ arr.push(str.charat(i))="" }="" return="" arr;="" <="" code=""></str.length;i++){></code></pre></p>
-<hr>
-<p>##方法二：利用正则表达式</p>
-<p><pre><code>var arr=str.match(/./g);<br></code></pre><br>strObj.match（reg）方法对字符串对象进行检索,返回包含所有匹配结果的数组。而 正则表达式 /./g 匹配的是所有的字符， 所以str.match(/./g)返回的是由字符串str中所有的字符组成的数组</p>
-<hr>
-<p>##方法三：利用split(“”)函数</p>
-<p><pre><code>var arr=str.split(“”);<br></code></pre></p>
+        <h3 id="方法一：for循环遍历，然后利用charAt取值"><a href="#方法一：for循环遍历，然后利用charAt取值" class="headerlink" title="方法一：for循环遍历，然后利用charAt取值"></a>方法一：for循环遍历，然后利用charAt取值</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> toArray(str)&#123;</div><div class="line">    <span class="keyword">if</span>(typeof str !=<span class="string">"string"</span>)&#123;</div><div class="line">        <span class="built_in">return</span> [];</div><div class="line">    &#125;</div><div class="line">  <span class="keyword">if</span>(str===<span class="string">""</span>) <span class="built_in">return</span> [];</div><div class="line">    var arr=[];</div><div class="line">    <span class="keyword">for</span>(var i=0;i&lt; str.length;i++)&#123;</div><div class="line">        arr.push(str.charAt(i))</div><div class="line">    &#125; </div><div class="line">    <span class="built_in">return</span> arr;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="方法二：利用正则表达式"><a href="#方法二：利用正则表达式" class="headerlink" title="方法二：利用正则表达式"></a>方法二：利用正则表达式</h3><p><pre><code>var arr=str.match(/./g);<br></code></pre><br>strObj.match（reg）方法对字符串对象进行检索,返回包含所有匹配结果的数组。而 正则表达式 /./g 匹配的是所有的字符， 所以str.match(/./g)返回的是由字符串str中所有的字符组成的数组</p>
+<h3 id="方法三：利用split-“”-函数"><a href="#方法三：利用split-“”-函数" class="headerlink" title="方法三：利用split(“”)函数"></a>方法三：利用split(“”)函数</h3><p><pre><code>var arr=str.split(“”);<br></code></pre></p>
 <blockquote>
 <p>方法二最快，方法三次之，方法一最慢</p>
 </blockquote>
