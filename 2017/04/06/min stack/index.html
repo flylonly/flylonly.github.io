@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        js字符串与字符数组转换｜undefined
+        最小栈｜undefined
         
     </title>
 
-    <link rel="canonical" href="http://flylonly.github.io/2017/01/24/js-01/">
+    <link rel="canonical" href="http://flylonly.github.io/2017/04/06/min stack/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -137,18 +137,18 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>js字符串与字符数组转换</h1>
+                    <h1>最小栈</h1>
                     
                     <span class="meta">
                          作者 Hyeongo
                         <span>
-                          日期 2017-01-24
+                          日期 2017-04-06
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#javascript"
-                           title="javascript">javascript</a>
+                        <a class="tag" href="/tags/#leetcode"
+                           title="leetcode">leetcode</a>
                         
                     </div>
                 </div>
@@ -157,7 +157,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            js字符串与字符数组转换
+            最小栈
         </span>
     </div>
 </header>
@@ -168,13 +168,9 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h3 id="方法一：for循环遍历，然后利用charAt取值"><a href="#方法一：for循环遍历，然后利用charAt取值" class="headerlink" title="方法一：for循环遍历，然后利用charAt取值"></a>方法一：for循环遍历，然后利用charAt取值</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">toArray</span>(<span class="params">str</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">typeof</span> str !=<span class="string">"string"</span>)&#123;</div><div class="line">        <span class="keyword">return</span> [];</div><div class="line">    &#125;</div><div class="line">  <span class="keyword">if</span>(str===<span class="string">""</span>) <span class="keyword">return</span> [];</div><div class="line">    <span class="keyword">var</span> arr=[];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt; str.length;i++)&#123;</div><div class="line">        arr.push(str.charAt(i))</div><div class="line">    &#125; </div><div class="line">    <span class="keyword">return</span> arr;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="方法二：利用正则表达式"><a href="#方法二：利用正则表达式" class="headerlink" title="方法二：利用正则表达式"></a>方法二：利用正则表达式</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr=str.match(<span class="regexp">/./g</span>);</div></pre></td></tr></table></figure>
-<p>strObj.match（reg）方法对字符串对象进行检索,返回包含所有匹配结果的数组。而 正则表达式 /./g 匹配的是所有的字符， 所以str.match(/./g)返回的是由字符串str中所有的字符组成的数组</p>
-<h3 id="方法三：利用split-“”-函数"><a href="#方法三：利用split-“”-函数" class="headerlink" title="方法三：利用split(“”)函数"></a>方法三：利用split(“”)函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr=str.split(<span class="string">""</span>);</div></pre></td></tr></table></figure>
-<blockquote>
-<p>方法二最快，方法三次之，方法一最慢</p>
-</blockquote>
+                <h3 id="最小栈"><a href="#最小栈" class="headerlink" title="最小栈"></a>最小栈</h3><p>Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.</p>
+<p>push(x) – Push element x onto stack.<br>pop() – Removes the element on top of the stack.<br>top() – Get the top element.<br>getMin() – Retrieve the minimum element in the stack.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">public class MinStack</div><div class="line">&#123;</div><div class="line">    ArrayList data = new ArrayList();</div><div class="line">    ArrayList minValue = new ArrayList();</div><div class="line">    public MinStack()</div><div class="line">    &#123;</div><div class="line">    &#125;</div><div class="line">    public void Push(int x)</div><div class="line">    &#123;</div><div class="line">        if (data.Count == 0)</div><div class="line">        &#123;</div><div class="line">            minValue.Add(x);</div><div class="line">        &#125;</div><div class="line">        else if (x &lt; (int)minValue[minValue.Count - 1])</div><div class="line">        &#123;</div><div class="line">            minValue.Add(x);</div><div class="line">        &#125;</div><div class="line">        data.Add(x);</div><div class="line">    &#125;</div><div class="line">    public void Pop()</div><div class="line">    &#123;</div><div class="line">        var temp = data[data.Count - 1];</div><div class="line">        if (temp.Equals(minValue[minValue.Count - 1]))</div><div class="line">        &#123;</div><div class="line">            minValue.RemoveAt(minValue.Count - 1);</div><div class="line">        &#125;</div><div class="line">        data.RemoveAt(data.Count - 1);</div><div class="line">    &#125;</div><div class="line">    public int Top()</div><div class="line">    &#123;</div><div class="line">        return (int)data[data.Count - 1];</div><div class="line">    &#125;</div><div class="line">    public int GetMin()</div><div class="line">    &#123;</div><div class="line">        return (int)minValue[minValue.Count - 1];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>利用两个栈来实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">public class MinStack</div><div class="line">    &#123;</div><div class="line">        Stack&lt;int&gt; data = new Stack&lt;int&gt;();</div><div class="line">        Stack&lt;int&gt; minValues = new Stack&lt;int&gt;();       </div><div class="line">        public MinStack()</div><div class="line">        &#123;</div><div class="line">        &#125;</div><div class="line">        public void Push(int x)</div><div class="line">        &#123;</div><div class="line">            data.Push(x);</div><div class="line">            if(minValues.Count==0 ||x&lt;=minValues.Peek())            </div><div class="line">            &#123;</div><div class="line">                minValues.Push(x);</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">        &#125;</div><div class="line">        public void Pop()</div><div class="line">        &#123;</div><div class="line">            int value = data.Pop();</div><div class="line">            if (value == minValues.Peek())</div><div class="line">                minValues.Pop();</div><div class="line">        &#125;</div><div class="line">        public int Top()</div><div class="line">        &#123;</div><div class="line">            return data.Peek();</div><div class="line">        &#125;</div><div class="line">        public int GetMin()</div><div class="line">        &#123;</div><div class="line">            return minValues.Peek();</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
 
                 <hr>
                 
@@ -182,10 +178,15 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/01/24/ExcelToDataTable/" data-toggle="tooltip" data-placement="top"
-                           title="NPOI将上传的excel转为datatable">&larr; Previous Post</a>
+                        <a href="/2017/04/06/组合继承/" data-toggle="tooltip" data-placement="top"
+                           title="组合继承">&larr; Previous Post</a>
                     </li>
                     
+                    
+                    <li class="next">
+                        <a href="/2017/01/24/ExcelToDataTable/" data-toggle="tooltip" data-placement="top"
+                           title="NPOI将上传的excel转为datatable">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -197,7 +198,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法一：for循环遍历，然后利用charAt取值"><span class="toc-text">方法一：for循环遍历，然后利用charAt取值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法二：利用正则表达式"><span class="toc-text">方法二：利用正则表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法三：利用split-“”-函数"><span class="toc-text">方法三：利用split(“”)函数</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#最小栈"><span class="toc-text">最小栈</span></a></li></ol>
                 </div>
             </div>
         </div>
